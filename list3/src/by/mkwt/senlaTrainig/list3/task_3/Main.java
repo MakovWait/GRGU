@@ -1,9 +1,9 @@
 package by.mkwt.senlaTrainig.list3.task_3;
 
-import task_3.flowers.products.Blowball;
-import task_3.flowers.Flower;
-import task_3.flowers.products.Rose;
-import task_3.options.BouquetBuilder;
+import by.mkwt.senlaTrainig.list3.task_3.flowers.Flower;
+import by.mkwt.senlaTrainig.list3.task_3.flowers.products.Blowball;
+import by.mkwt.senlaTrainig.list3.task_3.flowers.products.Rose;
+import by.mkwt.senlaTrainig.list3.task_3.options.BouquetBuilder;
 
 public class Main {
     /*

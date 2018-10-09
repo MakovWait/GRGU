@@ -6,11 +6,9 @@ public class Main {
     */
     public static void main(String[] args) {
         String text = "dsfdsfds,,,ss22, dsfsdf,   _sf";
-        String[] words;
-
-        words = StringParser.getWords(text);
-
-        for(String word: words){
+        String[] words = StringParser.getWords(text);
+        
+        for (String word : words) {
             System.out.println(word);
         }
     }

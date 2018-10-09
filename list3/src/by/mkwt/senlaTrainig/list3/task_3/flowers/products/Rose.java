@@ -1,6 +1,6 @@
-package task_3.flowers.products;
+package by.mkwt.senlaTrainig.list3.task_3.flowers.products;
 
-import task_3.flowers.categories.RedFlower;
+import by.mkwt.senlaTrainig.list3.task_3.flowers.categories.RedFlower;
 
 public class Rose extends RedFlower {
     public Rose() {
