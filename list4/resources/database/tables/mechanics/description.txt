@@ -1,0 +1,3 @@
+mechanics
+id;name
+integer;string

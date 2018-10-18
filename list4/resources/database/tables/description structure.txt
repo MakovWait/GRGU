@@ -1,0 +1,3 @@
+Name of the Table
+Name of the fields(with delimiters)
+Name of the value types(with delimiters)
