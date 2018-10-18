@@ -1,6 +1,6 @@
-package by.mkwt.senla.training.list4.task1.carservice.database.utils;
+package by.mkwt.senla.training.list4.task1.carService.database.utils;
 
-import by.mkwt.senla.training.list4.task1.carservice.database.table.Table;
+import by.mkwt.senla.training.list4.task1.carService.database.table.Table;
 
 public class TablePrinter {
 
@@ -15,7 +15,7 @@ public class TablePrinter {
 
         System.out.println();
 
-        for (int i = 0; i < table.getNumOfRows(); i++) {
+        for (int i = 0; i < table.getNumOfRecords(); i++) {
             for (int j = 0; j < table.getNumOfField(); j++) {
                 System.out.print(BORDER + table.getRecordByIndex(i).getFieldByIndex(j).getValue() + BORDER);
             }

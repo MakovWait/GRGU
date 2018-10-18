@@ -1,9 +1,9 @@
-package by.mkwt.senla.training.list4.task1.carservice.database.table;
+package by.mkwt.senla.training.list4.task1.carService.database.table;
 
-import by.mkwt.senla.training.list4.task1.carservice.database.table.structure.field.Field;
-import by.mkwt.senla.training.list4.task1.carservice.database.table.structure.field.FieldBuilder;
-import by.mkwt.senla.training.list4.task1.carservice.database.table.structure.row.Record;
-import by.mkwt.senla.training.list4.task1.carservice.database.utils.RecordParser;
+import by.mkwt.senla.training.list4.task1.carService.database.table.structure.field.Field;
+import by.mkwt.senla.training.list4.task1.carService.database.table.structure.field.FieldBuilder;
+import by.mkwt.senla.training.list4.task1.carService.database.table.structure.row.Record;
+import by.mkwt.senla.training.list4.task1.carService.database.utils.RecordParser;
 
 public class TableBuilder {
 

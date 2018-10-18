@@ -1,4 +1,4 @@
-package by.mkwt.senla.training.list4.task1.carservice.database.utils;
+package by.mkwt.senla.training.list4.task1.carService.database.utils;
 
 public class RecordParser {
     private static final String DELIMITER = ";";

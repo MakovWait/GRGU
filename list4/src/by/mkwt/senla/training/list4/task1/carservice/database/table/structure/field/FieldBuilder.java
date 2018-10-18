@@ -1,4 +1,4 @@
-package by.mkwt.senla.training.list4.task1.carservice.database.table.structure.field;
+package by.mkwt.senla.training.list4.task1.carService.database.table.structure.field;
 
 public class FieldBuilder {
     public static Field buildField(String fieldName, String value, String type) {
