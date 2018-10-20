@@ -1,16 +1,18 @@
-package by.mkwt.senla.training.list4.task1.carService.database.table;
+package by.mkwt.senla.training.list4.task1.carservice.database.utils.builders.table;
 
-import by.mkwt.senla.training.list4.task1.carService.database.table.structure.field.Field;
-import by.mkwt.senla.training.list4.task1.carService.database.table.structure.field.FieldBuilder;
-import by.mkwt.senla.training.list4.task1.carService.database.table.structure.row.Record;
-import by.mkwt.senla.training.list4.task1.carService.database.utils.RecordParser;
+import by.mkwt.senla.training.list4.task1.carservice.database.table.Table;
+import by.mkwt.senla.training.list4.task1.carservice.database.table.structure.field.Field;
+import by.mkwt.senla.training.list4.task1.carservice.database.utils.builders.field.FieldBuilder;
+import by.mkwt.senla.training.list4.task1.carservice.database.table.structure.record.Record;
+import by.mkwt.senla.training.list4.task1.carservice.database.utils.textutils.record.RecordParser;
+import by.mkwt.senla.training.list4.task1.carservice.database.utils.textutils.table.TableReader;
 
 public class TableBuilder {
 
-    private static TableReaderComponent readerComponent;
+    private static TableReader readerComponent;
 
     public static Table buildTableFromFile(String pathToTable, String pathToTableDescription) {
-        readerComponent = new TableReaderComponent(pathToTable, pathToTableDescription);
+        readerComponent = new TableReader(pathToTable, pathToTableDescription);
         Record[] records = new Record[readerComponent.getAllTableRecords().length];
 
         Field[] tmpFields;

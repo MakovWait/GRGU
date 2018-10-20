@@ -1,16 +1,14 @@
-package by.mkwt.senla.training.list4.task1.carService.database.table;
+package by.mkwt.senla.training.list4.task1.carservice.database.table;
 
-import by.mkwt.senla.training.list4.task1.carService.database.table.structure.row.Record;
-import by.mkwt.senla.training.list4.task1.carService.database.utils.TableSorter;
+import by.mkwt.senla.training.list4.task1.carservice.database.table.structure.record.Record;
+import by.mkwt.senla.training.list4.task1.carservice.database.utils.handlers.TableSorter;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 
 public class Table {
     private String tableName;
     private String[] fieldNames;
     private Record[] records;
-
 
     public Table(String tableName, String[] fieldNames, Record[] records) {
         this.tableName = tableName;
@@ -19,8 +17,7 @@ public class Table {
     }
 
     public void orderBy(String fieldName) {
-        TableSorter sorter = new TableSorter();
-        sorter.setSortedField(fieldName);
+        TableSorter sorter = new TableSorter(fieldName);
 
         Arrays.sort(records, sorter);
     }

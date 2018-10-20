@@ -1,13 +1,13 @@
-package by.mkwt.senla.training.list4.task1.carService.database.table;
+package by.mkwt.senla.training.list4.task1.carservice.database.utils.textutils.table;
 
 import com.senla.training.TextFileWorker;
 
-public class TableReaderComponent {
+public class TableReader {
 
     private TextFileWorker tableReader;
     private TextFileWorker descriptionReader;
 
-    public TableReaderComponent(String pathToTable, String pathToTableDescription) {
+    public TableReader(String pathToTable, String pathToTableDescription) {
         this.tableReader = new TextFileWorker(pathToTable);
         this.descriptionReader = new TextFileWorker(pathToTableDescription);
     }

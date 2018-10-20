@@ -1,6 +1,6 @@
-package by.mkwt.senla.training.list4.task1.carService.database.utils;
+package by.mkwt.senla.training.list4.task1.carservice.database.utils.handlers;
 
-import by.mkwt.senla.training.list4.task1.carService.database.table.structure.row.Record;
+import by.mkwt.senla.training.list4.task1.carservice.database.table.structure.record.Record;
 
 import java.util.Comparator;
 
@@ -8,7 +8,7 @@ public class TableSorter implements Comparator<Record>{
 
     private String sortedField;
 
-    public void setSortedField(String nameOfField) {
+    public TableSorter(String nameOfField) {
         sortedField = nameOfField;
     }
 

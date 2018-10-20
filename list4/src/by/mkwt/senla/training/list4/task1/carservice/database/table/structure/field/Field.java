@@ -1,4 +1,4 @@
-package by.mkwt.senla.training.list4.task1.carService.database.table.structure.field;
+package by.mkwt.senla.training.list4.task1.carservice.database.table.structure.field;
 
 public class Field<T extends Comparable<T>> implements Comparable<Field<T>>{
     private String name;
@@ -22,4 +22,5 @@ public class Field<T extends Comparable<T>> implements Comparable<Field<T>>{
     public int compareTo(Field<T> o) {
         return value.compareTo(o.value);
     }
+
 }

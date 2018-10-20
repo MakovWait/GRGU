@@ -1,6 +1,6 @@
-package by.mkwt.senla.training.list4.task1.carService.database.table.structure.row;
+package by.mkwt.senla.training.list4.task1.carservice.database.table.structure.record;
 
-import by.mkwt.senla.training.list4.task1.carService.database.table.structure.field.Field;
+import by.mkwt.senla.training.list4.task1.carservice.database.table.structure.field.Field;
 
 public class Record {
     private Field[] fields;
@@ -11,7 +11,9 @@ public class Record {
 
     public Field getFieldByName(String name) {
         for(Field field : fields) {
-            if(field.getFieldName().equals(name)) return field;
+            if(field.getFieldName().equals(name)) {
+                return field;
+            }
         }
         throw new IllegalArgumentException();
     }
