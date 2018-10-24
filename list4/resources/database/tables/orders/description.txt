@@ -1,3 +1,0 @@
-orders
-id|price
-INTEGER|FLOAT

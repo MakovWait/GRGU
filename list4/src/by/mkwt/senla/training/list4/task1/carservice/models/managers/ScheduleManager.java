@@ -43,13 +43,6 @@ public class ScheduleManager implements ItemManager<Schedule> {
         scheduleFileUtil.writeToFile(schedules.toArray(new Schedule[schedules.size()]));
     }
 
-    @Override
-    public void print() {
-        for (Schedule item : schedules) {
-            System.out.println(item.toLine());
-        }
-    }
-
     public ArrayList<Schedule> getSchedules() {
         return schedules;
     }

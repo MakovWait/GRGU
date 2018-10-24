@@ -9,6 +9,4 @@ public interface ItemManager<T> {
     void removeItem(T item);
 
     void saveItemList();
-
-    void print();
 }

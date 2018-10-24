@@ -15,6 +15,9 @@ import by.mkwt.senla.training.list4.task1.carservice.models.items.OrderState;
 import by.mkwt.senla.training.list4.task1.carservice.models.items.Schedule;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class RequestManager {
 
@@ -89,5 +92,37 @@ public class RequestManager {
         return mechanicManager.getMechanics();
     }
 
+    public static Order getOrderByMechanic(Mechanic mechanic) {
+        scheduleManager.buildItemListFromFile();
+        orderManager.buildItemListFromFile();
+        for (Schedule schedule : scheduleManager.getSchedules()) {
+            if(schedule.getMechanicID().equals(mechanic.getId())) {
+                return orderManager.getOrderByID(schedule.getOrderID());
+            }
+        }
+        return null;
+    }
+
+    public static ArrayList<Mechanic> getMechanicsByOrder(Order order) {
+        scheduleManager.buildItemListFromFile();
+        mechanicManager.buildItemListFromFile();
+        ArrayList<Mechanic> mechanics = new ArrayList<>();
+
+        for (Schedule schedule : scheduleManager.getSchedules()) {
+            if(schedule.getOrderID().equals(order.getId())) {
+                mechanics.add(mechanicManager.getMechanicByID(schedule.getMechanicID()));
+            }
+        }
+        return mechanics;
+    }
+
+    public static Date getNearestFreeDate() {
+        scheduleManager.buildItemListFromFile();
+        GregorianCalendar calendar = new GregorianCalendar();
+        calendar.setTime(scheduleManager.getSchedules().get(scheduleManager.getSchedules().size() - 1).getDate());
+        calendar.add(Calendar.DAY_OF_WEEK, 1);
+
+        return calendar.getTime();
+    }
 
 }

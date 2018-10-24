@@ -39,14 +39,8 @@ public class GarageManager implements ItemManager<Garage> {
 
     @Override
     public void saveItemList() {
-        garageFileUtil.writeToFile(garages.toArray(new Garage[garages.size()]));
-    }
 
-    @Override
-    public void print() {
-        for (Garage item : garages) {
-            System.out.println(item.toLine());
-        }
+        garageFileUtil.writeToFile(garages.toArray(new Garage[garages.size()]));
     }
 
     public ArrayList<Garage> getGarages() {

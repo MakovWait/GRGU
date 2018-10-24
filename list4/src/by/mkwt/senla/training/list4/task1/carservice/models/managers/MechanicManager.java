@@ -55,10 +55,4 @@ public class MechanicManager implements ItemManager<Mechanic> {
         return null;
     }
 
-    @Override
-    public void print() {
-        for (Mechanic item : mechanics) {
-            System.out.println(item.toLine());
-        }
-    }
 }

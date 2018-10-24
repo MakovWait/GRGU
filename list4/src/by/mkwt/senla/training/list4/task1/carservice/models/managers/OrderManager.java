@@ -45,13 +45,6 @@ public class OrderManager implements ItemManager<Order> {
         orderFileUtil.writeToFile(orders.toArray(new Order[orders.size()]));
     }
 
-    @Override
-    public void print() {
-        for (Order item : orders) {
-            System.out.println(item.toLine());
-        }
-    }
-
     public void changeItemState(Order currentOrder, OrderState newState) {
         orders.get(orders.indexOf(currentOrder)).setState(newState);
     }
@@ -67,5 +60,14 @@ public class OrderManager implements ItemManager<Order> {
 
     public ArrayList<Order> getOrders() {
         return orders;
+    }
+
+    public Order getOrderByID(Long id) {
+        for (Order order : orders) {
+            if (order.getId().equals(id)) {
+                return order;
+            }
+        }
+        return null;
     }
 }
