@@ -22,10 +22,20 @@ public class Garage implements Item {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof Garage) {
-            return this.toLine().equals(((Garage) obj).toLine());
+
+        if(obj == this) {
+            return true;
         }
 
-        return super.equals(obj);
+        if(obj == null || !(getClass() == obj.getClass())){
+            return false;
+        } else {
+            Garage tmpGarage = (Garage) obj;
+            if(tmpGarage.id != this.id) {
+                return false;
+            } else {
+                return true;
+            }
+        }
     }
 }

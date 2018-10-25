@@ -5,50 +5,63 @@ import java.util.Date;
 public class Schedule implements Item {
 
     private Date date;
-    private Long orderID;
-    private Long mechanicID;
-    private Long garageID;
+    private Long orderId;
+    private Long mechanicId;
+    private Long garageId;
 
-    public Schedule(Date date, Long orderID, Long mechanicID, Long garageID) {
+    public Schedule(Date date, Long orderId, Long mechanicId, Long garageId) {
         this.date = date;
-        this.orderID = orderID;
-        this.mechanicID = mechanicID;
-        this.garageID = garageID;
+        this.orderId = orderId;
+        this.mechanicId = mechanicId;
+        this.garageId = garageId;
     }
 
     public Date getDate() {
         return date;
     }
 
-    public Long getOrderID() {
-        return orderID;
+    public Long getOrderId() {
+        return orderId;
     }
 
-    public Long getMechanicID() {
-        return mechanicID;
+    public Long getMechanicId() {
+        return mechanicId;
     }
 
-    public Long getGarageID() {
-        return garageID;
+    public Long getGarageId() {
+        return garageId;
     }
 
     @Override
     public String toLine() {
         final String[] array = new String[]{
                 String.valueOf(this.getDate().getTime()),
-                String.valueOf(this.getOrderID()),
-                String.valueOf(this.getMechanicID()),
-                String.valueOf(this.getGarageID())
+                String.valueOf(this.getOrderId()),
+                String.valueOf(this.getMechanicId()),
+                String.valueOf(this.getGarageId())
         };
         return String.join("|", array);
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof Schedule) {
-            return this.toLine().equals(((Schedule) obj).toLine());
+
+        if(obj == this) {
+            return true;
         }
 
-        return super.equals(obj);
+        if(obj == null || !(getClass() == obj.getClass())){
+            return false;
+        } else {
+            Schedule tmpSchedule = (Schedule) obj;
+            if(tmpSchedule.date != this.date
+                    || !tmpSchedule.orderId.equals(this.orderId)
+                    || !tmpSchedule.mechanicId.equals(this.mechanicId)
+                    || !tmpSchedule.garageId.equals(this.garageId)) {
+                return false;
+            } else {
+                return true;
+            }
+        }
     }
 }

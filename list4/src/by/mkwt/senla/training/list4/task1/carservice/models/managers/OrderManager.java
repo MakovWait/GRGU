@@ -7,10 +7,11 @@ import by.mkwt.senla.training.list4.task1.carservice.models.items.OrderState;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 public class OrderManager implements ItemManager<Order> {
 
-    private ArrayList<Order> orders;
+    private List<Order> orders;
     private OrderFileUtil orderFileUtil = new OrderFileUtil();
 
     @Override
@@ -22,7 +23,7 @@ public class OrderManager implements ItemManager<Order> {
     @Override
     public void addItem(Order order) {
         if (orders == null) {
-            System.out.print("The orders should be initialized first");
+            buildItemListFromFile();
             return;
         }
 
@@ -58,11 +59,11 @@ public class OrderManager implements ItemManager<Order> {
         }
     }
 
-    public ArrayList<Order> getOrders() {
+    public List<Order> getOrders() {
         return orders;
     }
 
-    public Order getOrderByID(Long id) {
+    public Order getOrderById(Long id) {
         for (Order order : orders) {
             if (order.getId().equals(id)) {
                 return order;

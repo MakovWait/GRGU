@@ -5,10 +5,11 @@ import by.mkwt.senla.training.list4.task1.carservice.models.items.Mechanic;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class MechanicManager implements ItemManager<Mechanic> {
 
-    private ArrayList<Mechanic> mechanics;
+    private List<Mechanic> mechanics;
     private MechanicFileUtil mechanicFileUtil = new MechanicFileUtil();
 
     @Override
@@ -19,7 +20,7 @@ public class MechanicManager implements ItemManager<Mechanic> {
     @Override
     public void addItem(Mechanic mechanic) {
         if (mechanics == null) {
-            System.out.print("The mechanics should be initialized first");
+            buildItemListFromFile();
             return;
         }
 
@@ -42,11 +43,11 @@ public class MechanicManager implements ItemManager<Mechanic> {
         mechanicFileUtil.writeToFile(mechanics.toArray(new Mechanic[mechanics.size()]));
     }
 
-    public ArrayList<Mechanic> getMechanics() {
+    public List<Mechanic> getMechanics() {
         return mechanics;
     }
 
-    public Mechanic getMechanicByID(Long id) {
+    public Mechanic getMechanicById(Long id) {
         for (Mechanic mechanic : mechanics) {
             if (mechanic.getId().equals(id)) {
                 return mechanic;

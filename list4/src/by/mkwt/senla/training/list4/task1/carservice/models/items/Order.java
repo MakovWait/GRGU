@@ -51,6 +51,11 @@ public class Order implements Item {
     }
 
     public void shiftEndingDate(Date shiftedDate) {
+        if(shiftedDate == null) {
+            final Long NULL_TIME = 0l;
+            shiftedDate = new Date(NULL_TIME);
+        }
+
         Long currentEndingDate = endingDate.getTime();
 
         this.endingDate = new Date(currentEndingDate + shiftedDate.getTime());
@@ -71,10 +76,25 @@ public class Order implements Item {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof Order) {
-            return this.toLine().equals(((Order) obj).toLine());
+
+        if (obj == this) {
+            return true;
         }
 
-        return super.equals(obj);
+        if (obj == null || !(getClass() == obj.getClass())) {
+            return false;
+        } else {
+            Order tmpOrder = (Order) obj;
+            if (tmpOrder.id != this.id
+                    || !tmpOrder.fillingDate.equals(this.fillingDate)
+                    || !tmpOrder.startingDate.equals(this.startingDate)
+                    || !tmpOrder.endingDate.equals(this.endingDate)
+                    || !tmpOrder.price.equals(this.price)
+                    || !tmpOrder.state.equals(this.state)) {
+                return false;
+            } else {
+                return true;
+            }
+        }
     }
 }

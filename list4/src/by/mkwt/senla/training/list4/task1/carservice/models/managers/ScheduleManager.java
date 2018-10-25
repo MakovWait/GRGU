@@ -5,10 +5,11 @@ import by.mkwt.senla.training.list4.task1.carservice.models.items.Schedule;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class ScheduleManager implements ItemManager<Schedule> {
 
-    private ArrayList<Schedule> schedules;
+    private List<Schedule> schedules;
     private ScheduleFileUtil scheduleFileUtil = new ScheduleFileUtil();
 
     @Override
@@ -20,8 +21,7 @@ public class ScheduleManager implements ItemManager<Schedule> {
     @Override
     public void addItem(Schedule schedule) {
         if (schedules == null) {
-            System.out.print("The schedules should be initialized first");
-            return;
+            buildItemListFromFile();
         }
 
         if (!schedules.contains(schedule)) {
@@ -43,7 +43,7 @@ public class ScheduleManager implements ItemManager<Schedule> {
         scheduleFileUtil.writeToFile(schedules.toArray(new Schedule[schedules.size()]));
     }
 
-    public ArrayList<Schedule> getSchedules() {
+    public List<Schedule> getSchedules() {
         return schedules;
     }
 }

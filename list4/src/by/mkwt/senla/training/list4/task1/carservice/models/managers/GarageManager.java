@@ -5,10 +5,11 @@ import by.mkwt.senla.training.list4.task1.carservice.models.items.Garage;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class GarageManager implements ItemManager<Garage> {
 
-    private ArrayList<Garage> garages;
+    private List<Garage> garages;
     private GarageFileUtil garageFileUtil = new GarageFileUtil();
 
     @Override
@@ -19,8 +20,7 @@ public class GarageManager implements ItemManager<Garage> {
     @Override
     public void addItem(Garage garage) {
         if (garages == null) {
-            System.out.print("The garages should be initialized first");
-            return;
+            buildItemListFromFile();
         }
 
         if (!garages.contains(garage)) {
@@ -43,7 +43,7 @@ public class GarageManager implements ItemManager<Garage> {
         garageFileUtil.writeToFile(garages.toArray(new Garage[garages.size()]));
     }
 
-    public ArrayList<Garage> getGarages() {
+    public List<Garage> getGarages() {
         return garages;
     }
 

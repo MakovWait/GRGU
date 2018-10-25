@@ -14,38 +14,42 @@ import by.mkwt.senla.training.list4.task1.carservice.models.items.Order;
 import by.mkwt.senla.training.list4.task1.carservice.models.items.OrderState;
 import by.mkwt.senla.training.list4.task1.carservice.models.items.Schedule;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
+import java.util.*;
 
 public class RequestManager {
 
-    private static GarageManager garageManager = new GarageManager();
-    private static OrderManager orderManager = new OrderManager();
-    private static ScheduleManager scheduleManager = new ScheduleManager();
-    private static MechanicManager mechanicManager = new MechanicManager();
+    private  GarageManager garageManager;
+    private  OrderManager orderManager;
+    private  ScheduleManager scheduleManager;
+    private  MechanicManager mechanicManager;
 
-    public static ArrayList<Garage> getEmptyGarages() {
+    public RequestManager() {
+        garageManager = new GarageManager();
+        orderManager = new OrderManager();
+        scheduleManager = new ScheduleManager();
+        mechanicManager = new MechanicManager();
+    }
+
+    public List<Garage> getEmptyGarages() {
         garageManager.buildItemListFromFile();
-        ArrayList<Garage> result = new ArrayList<>();
+        List<Garage> tmpResult = new ArrayList<>();
 
         scheduleManager.buildItemListFromFile();
         ArrayList<Order> activeOrders = getActiveOrders();
 
         for (Schedule schedule : scheduleManager.getSchedules()) {
             for (Order order : activeOrders) {
-                if (schedule.getOrderID().equals(order.getId())) {
-                    result.add(garageManager.getGarageByID(schedule.getMechanicID()));
+                if (schedule.getOrderId().equals(order.getId())) {
+                    tmpResult.add(garageManager.getGarageByID(schedule.getMechanicId()));
                 }
             }
         }
-        garageManager.getGarages().removeAll(result);
-        result = garageManager.getGarages();
-        return result;
+        garageManager.getGarages().removeAll(tmpResult);
+
+        return garageManager.getGarages();
     }
 
-    public static ArrayList<Order> getActiveOrders() {
+    public ArrayList<Order> getActiveOrders() {
         ArrayList<Order> result = new ArrayList<>();
         orderManager.buildItemListFromFile();
 
@@ -57,7 +61,7 @@ public class RequestManager {
         return result;
     }
 
-    public static ArrayList<Order> getActiveOrdersSortedBy(OrderCompareTypes type) {
+    public ArrayList<Order> getActiveOrdersSortedBy(OrderCompareTypes type) {
         OrderSorter orderSorter = new OrderSorter();
 
         ArrayList<Order> result = getActiveOrders();
@@ -66,12 +70,12 @@ public class RequestManager {
         return result;
     }
 
-    public static ArrayList<Order> getOrderList() {
+    public List<Order> getOrderList() {
         orderManager.buildItemListFromFile();
         return orderManager.getOrders();
     }
 
-    public static ArrayList<Order> getOrderListSortedBy(OrderCompareTypes type) {
+    public List<Order> getOrderListSortedBy(OrderCompareTypes type) {
         OrderSorter orderSorter = new OrderSorter();
 
         orderManager.buildItemListFromFile();
@@ -79,12 +83,12 @@ public class RequestManager {
         return orderManager.getOrders();
     }
 
-    public static ArrayList<Mechanic> getMechanicList() {
+    public List<Mechanic> getMechanicList() {
         mechanicManager.buildItemListFromFile();
         return mechanicManager.getMechanics();
     }
 
-    public static ArrayList<Mechanic> getMechanicListSortedBy(MechanicCompareTypes type) {
+    public List<Mechanic> getMechanicListSortedBy(MechanicCompareTypes type) {
         MechanicSorter mechanicSorter = new MechanicSorter();
 
         mechanicManager.buildItemListFromFile();
@@ -92,31 +96,31 @@ public class RequestManager {
         return mechanicManager.getMechanics();
     }
 
-    public static Order getOrderByMechanic(Mechanic mechanic) {
+    public Order getOrderByMechanic(Mechanic mechanic) {
         scheduleManager.buildItemListFromFile();
         orderManager.buildItemListFromFile();
         for (Schedule schedule : scheduleManager.getSchedules()) {
-            if(schedule.getMechanicID().equals(mechanic.getId())) {
-                return orderManager.getOrderByID(schedule.getOrderID());
+            if(schedule.getMechanicId().equals(mechanic.getId())) {
+                return orderManager.getOrderById(schedule.getOrderId());
             }
         }
         return null;
     }
 
-    public static ArrayList<Mechanic> getMechanicsByOrder(Order order) {
+    public ArrayList<Mechanic> getMechanicsByOrder(Order order) {
         scheduleManager.buildItemListFromFile();
         mechanicManager.buildItemListFromFile();
         ArrayList<Mechanic> mechanics = new ArrayList<>();
 
         for (Schedule schedule : scheduleManager.getSchedules()) {
-            if(schedule.getOrderID().equals(order.getId())) {
-                mechanics.add(mechanicManager.getMechanicByID(schedule.getMechanicID()));
+            if(schedule.getOrderId().equals(order.getId())) {
+                mechanics.add(mechanicManager.getMechanicById(schedule.getMechanicId()));
             }
         }
         return mechanics;
     }
 
-    public static Date getNearestFreeDate() {
+    public Date getNearestFreeDate() {
         scheduleManager.buildItemListFromFile();
         GregorianCalendar calendar = new GregorianCalendar();
         calendar.setTime(scheduleManager.getSchedules().get(scheduleManager.getSchedules().size() - 1).getDate());
@@ -124,5 +128,4 @@ public class RequestManager {
 
         return calendar.getTime();
     }
-
 }

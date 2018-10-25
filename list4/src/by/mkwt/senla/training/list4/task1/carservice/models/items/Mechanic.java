@@ -19,8 +19,7 @@ public class Mechanic implements Item {
 
     @Override
     public String toLine() {
-        String[] values;
-        values = new String[]{
+        String[] values = new String[]{
                 String.valueOf(id),
                 name
         };
@@ -29,10 +28,22 @@ public class Mechanic implements Item {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof Mechanic) {
-            return this.toLine().equals(((Mechanic) obj).toLine());
+
+        if(obj == this) {
+            return true;
         }
 
-        return super.equals(obj);
+        if(obj == null || !(getClass() == obj.getClass())){
+            return false;
+        } else {
+            Mechanic tmpMechanic = (Mechanic) obj;
+
+            if(tmpMechanic.id != this.id
+                    || !tmpMechanic.name.equals(this.name)) {
+                return false;
+            } else {
+                return true;
+            }
+        }
     }
 }
