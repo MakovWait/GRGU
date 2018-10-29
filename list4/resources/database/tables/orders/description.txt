@@ -1,0 +1,3 @@
+orders
+orderId|fillingDate|startingDate|endingDate|price|state
+LONG|DATE|DATE|DATE|BIG_DECIMAL|STRING
