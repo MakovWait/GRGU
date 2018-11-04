@@ -11,12 +11,10 @@ import java.util.Set;
 
 public class ScheduleManager {
 
-    private final String PATH_TO_FILE = "./resources/database/tables/schedule/values.txt";
-
     private LoaderComponent<ScheduleItem> loader;
     private Set<ScheduleItem> scheduleItems;
 
-    public ScheduleManager() {
+    public ScheduleManager(final String PATH_TO_FILE) {
         loader = new LoaderComponent<>(new ScheduleParser(), PATH_TO_FILE);
         loadSchedule();
     }

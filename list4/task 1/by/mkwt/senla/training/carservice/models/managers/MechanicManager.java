@@ -10,13 +10,11 @@ import java.util.*;
 
 public class MechanicManager {
 
-    private final String PATH_TO_FILE = "./resources/database/tables/mechanics/values.txt";
-
     private LoaderComponent<Mechanic> loader;
     private MechanicSorter sorter;
     private Map<Long, Mechanic> mechanics;
 
-    public MechanicManager() {
+    public MechanicManager(final String PATH_TO_FILE) {
         loader = new LoaderComponent<>(new MechanicParser(), PATH_TO_FILE);
         sorter = new MechanicSorter();
 

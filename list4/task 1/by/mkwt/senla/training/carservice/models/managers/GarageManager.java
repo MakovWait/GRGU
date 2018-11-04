@@ -8,12 +8,11 @@ import java.util.*;
 
 public class GarageManager {
 
-    private final String PATH_TO_FILE = "./resources/database/tables/garages/values.txt";
-
     private LoaderComponent<Garage> loader;
     private Map<Long, Garage> garages;
 
-    public GarageManager() {
+    public GarageManager(final String PATH_TO_FILE) {
+
         loader =  new LoaderComponent<>(new GarageParser(), PATH_TO_FILE);
 
         loadAllGarages();

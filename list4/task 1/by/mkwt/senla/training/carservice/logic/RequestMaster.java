@@ -9,17 +9,48 @@ import by.mkwt.senla.training.carservice.models.managers.ScheduleManager;
 import by.mkwt.senla.training.carservice.sorters.MechanicOrderableValues;
 import by.mkwt.senla.training.carservice.sorters.OrderOrderableValues;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.*;
 
 public class RequestMaster {
 
-    private ScheduleManager scheduleManager = new ScheduleManager();
-    private GarageManager garageManager = new GarageManager();
-    private OrderManager orderManager = new OrderManager();
-    private MechanicManager mechanicManager = new MechanicManager();
+    private static RequestMaster instance;
+
+    private ScheduleManager scheduleManager;
+    private GarageManager garageManager;
+    private OrderManager orderManager;
+    private MechanicManager mechanicManager;
+
+    private RequestMaster(String pathToProperties) {
+        loadData(pathToProperties);
+    }
+
+
+    public static RequestMaster getInstance(String pathToProperties) {
+        if (instance == null) {
+            instance = new RequestMaster(pathToProperties);
+        }
+        return instance;
+    }
+
+    private void loadData(String pathToProperties) {
+        FileInputStream fis;
+        Properties property = new Properties();
+
+        try {
+            fis = new FileInputStream(pathToProperties);
+            property.load(fis);
+
+            scheduleManager = new ScheduleManager(property.getProperty("db.path_to_schedule"));
+            garageManager = new GarageManager(property.getProperty("db.path_to_garage"));
+            mechanicManager = new MechanicManager(property.getProperty("db.path_to_mechanics"));
+            orderManager = new OrderManager(property.getProperty("db.path_to_orders"));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * the list of empty garages in car service
@@ -198,5 +229,41 @@ public class RequestMaster {
         }
 
         return activeOrders.get(activeOrders.size() - 1).getEndingDate();
+    }
+
+    /**
+     * Shift orders
+     * */
+    public void setDelayedOrder(long orderId, long delayedTime) {
+        List<Order> dependentOrders = getDependentOrders(orderId);
+        shiftOrdersEndingDate(dependentOrders, delayedTime);
+    }
+
+    private void shiftOrdersEndingDate(List<Order> dependentOrders, long delayedTime) {
+
+        List<Order> neededToChangeOrders = orderManager.getAllOrders();
+        neededToChangeOrders.retainAll(dependentOrders);
+
+        orderManager.shiftEndingDates(neededToChangeOrders, delayedTime);
+    }
+
+    private List<Order> getDependentOrders(long orderId) {
+
+        HashSet<Order> result = new HashSet<>();
+        HashSet<Long> mechanicsInOrder = new HashSet<>();
+        HashSet<Long> garagesInOrder = new HashSet<>();
+
+        for (ScheduleItem scheduleItem : scheduleManager.getSchedule()) {
+            if (scheduleItem.getOrderId() == orderId) {
+                mechanicsInOrder.add(scheduleItem.getMechanicId());
+                garagesInOrder.add(scheduleItem.getGarageId());
+            } else if (!mechanicsInOrder.add(scheduleItem.getMechanicId())
+                    || !garagesInOrder.add(scheduleItem.getGarageId())) {
+
+                result.add(orderManager.getOrderById(scheduleItem.getOrderId()));
+            }
+        }
+
+        return new ArrayList<>(result);
     }
 }

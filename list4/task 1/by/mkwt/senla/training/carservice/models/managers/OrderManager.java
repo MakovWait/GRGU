@@ -11,13 +11,11 @@ import java.util.*;
 
 public class OrderManager {
 
-    private final String PATH_TO_FILE = "./resources/database/tables/orders/values.txt";
-
     private LoaderComponent<Order> loader;
     private OrderSorter sorter;
     private Map<Long, Order> orders;
 
-    public OrderManager() {
+    public OrderManager(final String PATH_TO_FILE) {
         loader = new LoaderComponent<>(new OrderParser(), PATH_TO_FILE);
         sorter = new OrderSorter();
 

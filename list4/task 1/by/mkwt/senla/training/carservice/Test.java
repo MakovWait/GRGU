@@ -9,7 +9,7 @@ import java.util.Date;
 
 public class Test {
     public static void main(String[] args) {
-        RequestMaster requestMaster = new RequestMaster();
+        RequestMaster requestMaster = RequestMaster.getInstance(args[0]);
 
         System.out.println(requestMaster.getEmptyGarages());
 
