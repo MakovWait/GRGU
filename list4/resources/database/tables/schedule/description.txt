@@ -1,3 +1,0 @@
-schedule
-orderId|mechanicId|garageId|
-LONG|LONG|LONG

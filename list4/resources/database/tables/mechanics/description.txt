@@ -1,3 +1,0 @@
-mechanics
-mechanicId|mechanicName
-LONG|STRING

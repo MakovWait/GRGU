@@ -1,3 +1,0 @@
-garages
-garageId|
-LONG|
