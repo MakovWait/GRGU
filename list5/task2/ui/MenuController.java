@@ -1,9 +1,6 @@
 package by.mkwt.senla.training.carservice.ui;
 
-import by.mkwt.senla.training.carservice.ui.menubuilders.Builder;
-import by.mkwt.senla.training.carservice.ui.menubuilders.GeneralBuilder;
-
-import java.util.Scanner;
+import by.mkwt.senla.training.carservice.ui.utils.InputReader;
 
 public class MenuController {
 
@@ -11,21 +8,22 @@ public class MenuController {
     private Navigator navigator;
 
     public MenuController() {
-        builder = new GeneralBuilder();
+        builder = new Builder();
 
         builder.buildMenu();
         navigator = new Navigator(builder.getRootMenu());
     }
 
     public void run() {
-        Scanner scanner = new Scanner(System.in);
         int input;
         boolean exitFlag;
 
         do {
             navigator.printMenu();
-            input = scanner.nextInt() - 1;
+            input = InputReader.getInstance().parseIntoNavigateInstruction(InputReader.getInstance().listenInput());
             exitFlag = navigator.navigate(input);
         } while (!exitFlag);
+
+        InputReader.getInstance().dispose();
     }
 }
