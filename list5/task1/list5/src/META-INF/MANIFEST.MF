@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Class-Path: -cp textFileWorker.jar
+Main-Class: by.mkwt.senla.training.carservice.Test
+

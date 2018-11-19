@@ -1,0 +1,3 @@
+17:04:31,757 ERROR main Test:main:17 - by.mkwt.senla.training.carservice.logic.exceptions.ItemIsAlreadyExistException: Item is already exist
+17:15:12,782 ERROR main ManageMaster:getGarageById:23 - by.mkwt.senla.training.carservice.logic.exceptions.IllegalIdException: Are you sure that this id is correct? Try again
+19:08:03,273 ERROR main CarService:getInstance:48 - Method load should be execute first
