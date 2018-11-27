@@ -1,4 +1,4 @@
-package by.mkwt.senla.training.carservice.ui.actions.show.order.all;
+package by.mkwt.senla.training.carservice.view.actions.show.order.all;
 
 import by.mkwt.senla.training.carservice.api.CarService;
 import by.mkwt.senla.training.ui.api.Action;

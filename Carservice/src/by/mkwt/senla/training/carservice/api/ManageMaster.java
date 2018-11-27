@@ -1,5 +1,6 @@
 package by.mkwt.senla.training.carservice.api;
 
+import by.mkwt.loaders.PermissionException;
 import by.mkwt.senla.training.carservice.logic.exceptions.IllegalIdException;
 import by.mkwt.senla.training.carservice.logic.exceptions.IllegalItemLineImplException;
 import by.mkwt.senla.training.carservice.logic.exceptions.ItemIsAlreadyExistException;
@@ -11,8 +12,7 @@ import by.mkwt.senla.training.carservice.logic.models.managers.OrderManager;
 import by.mkwt.senla.training.carservice.logic.models.managers.ScheduleManager;
 import com.sun.org.apache.xpath.internal.operations.Or;
 
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class ManageMaster {
 
@@ -20,16 +20,19 @@ public class ManageMaster {
     private GarageManager garageManager;
     private OrderManager orderManager;
     private MechanicManager mechanicManager;
+    private Map<String, Boolean> permissions;
 
     public ManageMaster(ScheduleManager scheduleManager,
                         GarageManager garageManager,
                         OrderManager orderManager,
-                        MechanicManager mechanicManager) {
+                        MechanicManager mechanicManager,
+                        Map<String, Boolean> permissions) {
 
         this.scheduleManager = scheduleManager;
         this.garageManager = garageManager;
         this.orderManager = orderManager;
         this.mechanicManager = mechanicManager;
+        this.permissions = permissions;
     }
 
     public Garage getGarageById(Long id) throws IllegalIdException {
@@ -42,7 +45,11 @@ public class ManageMaster {
         return result;
     }
 
-    public void addGarage(String garageStringImpl) throws IllegalIdException, ItemIsAlreadyExistException, IllegalItemLineImplException {
+    public void addGarage(String garageStringImpl) throws IllegalIdException, ItemIsAlreadyExistException, IllegalItemLineImplException, PermissionException {
+        if (!permissions.get("garage_manage_permission")) {
+            throw new PermissionException();
+        }
+
         try {
             Garage tmp = garageManager.getGarageFromLine(garageStringImpl);
             garageManager.addGarage(tmp);
@@ -51,7 +58,11 @@ public class ManageMaster {
         }
 }
 
-    public void removeGarage(Long id) throws NoSuchItemException {
+    public void removeGarage(Long id) throws NoSuchItemException, PermissionException {
+        if (!permissions.get("garage_manage_permission")) {
+            throw new PermissionException();
+        }
+
         garageManager.removeGarageById(id);
     }
 
@@ -96,7 +107,10 @@ public class ManageMaster {
         }
     }
 
-    public void removeOrder(Long id) throws NoSuchItemException {
+    public void removeOrder(Long id) throws NoSuchItemException, PermissionException {
+        if (permissions.get("delete_orders_permission")) {
+            throw new PermissionException();
+        }
         orderManager.removeOrderById(id);
     }
 
@@ -116,5 +130,44 @@ public class ManageMaster {
         }
 
         return result;
+    }
+
+    /**
+     * Shift orders
+     */
+    public void setDelayedOrder(long orderId) throws PermissionException {
+        if (permissions.get("shift_dates_permission")) {
+            throw new PermissionException();
+        }
+
+        long delayedTime = new Date().getTime() - orderManager.getOrderById(orderId).getEndingDate().getTime();
+        List<Order> dependentOrders = getDependentOrders(orderId);
+        shiftOrdersEndingDate(dependentOrders, delayedTime);
+    }
+
+    private void shiftOrdersEndingDate(List<Order> dependentOrders, long delayedTime) {
+        List<Order> neededToChangeOrders = orderManager.getAllOrders();
+        neededToChangeOrders.retainAll(dependentOrders);
+
+        orderManager.shiftEndingDates(neededToChangeOrders, delayedTime);
+    }
+
+    private List<Order> getDependentOrders(long orderId) {
+        HashSet<Order> result = new HashSet<>();
+        HashSet<Long> mechanicsInOrder = new HashSet<>();
+        HashSet<Long> garagesInOrder = new HashSet<>();
+
+        for (ScheduleItem scheduleItem : scheduleManager.getSchedule()) {
+            if (scheduleItem.getOrderId() == orderId) {
+                mechanicsInOrder.add(scheduleItem.getMechanicId());
+                garagesInOrder.add(scheduleItem.getGarageId());
+            } else if (!mechanicsInOrder.add(scheduleItem.getMechanicId())
+                    || !garagesInOrder.add(scheduleItem.getGarageId())) {
+
+                result.add(orderManager.getOrderById(scheduleItem.getOrderId()));
+            }
+        }
+
+        return new ArrayList<>(result);
     }
 }

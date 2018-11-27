@@ -207,39 +207,4 @@ public class RequestMaster {
 
         return new Date();
     }
-
-    /**
-     * Shift orders
-     */
-    public void setDelayedOrder(long orderId) {
-        long delayedTime = new Date().getTime() - orderManager.getOrderById(orderId).getEndingDate().getTime();
-        List<Order> dependentOrders = getDependentOrders(orderId);
-        shiftOrdersEndingDate(dependentOrders, delayedTime);
-    }
-
-    private void shiftOrdersEndingDate(List<Order> dependentOrders, long delayedTime) {
-        List<Order> neededToChangeOrders = orderManager.getAllOrders();
-        neededToChangeOrders.retainAll(dependentOrders);
-
-        orderManager.shiftEndingDates(neededToChangeOrders, delayedTime);
-    }
-
-    private List<Order> getDependentOrders(long orderId) {
-        HashSet<Order> result = new HashSet<>();
-        HashSet<Long> mechanicsInOrder = new HashSet<>();
-        HashSet<Long> garagesInOrder = new HashSet<>();
-
-        for (ScheduleItem scheduleItem : scheduleManager.getSchedule()) {
-            if (scheduleItem.getOrderId() == orderId) {
-                mechanicsInOrder.add(scheduleItem.getMechanicId());
-                garagesInOrder.add(scheduleItem.getGarageId());
-            } else if (!mechanicsInOrder.add(scheduleItem.getMechanicId())
-                    || !garagesInOrder.add(scheduleItem.getGarageId())) {
-
-                result.add(orderManager.getOrderById(scheduleItem.getOrderId()));
-            }
-        }
-
-        return new ArrayList<>(result);
-    }
 }

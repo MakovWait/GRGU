@@ -3,7 +3,7 @@ package by.mkwt.senla.training.carservice.view;
 import by.mkwt.senla.training.carservice.logic.models.sorters.MechanicOrderableValues;
 import by.mkwt.senla.training.carservice.logic.models.sorters.OrderOrderableValues;
 import by.mkwt.senla.training.carservice.view.actions.manage.garage.AddGarageAction;
-import by.mkwt.senla.training.carservice.ui.actions.manage.garage.RemoveGarageAction;
+import by.mkwt.senla.training.carservice.view.actions.manage.garage.RemoveGarageAction;
 import by.mkwt.senla.training.carservice.view.actions.manage.mechanic.AddMechanicAction;
 import by.mkwt.senla.training.carservice.ui.actions.manage.mechanic.RemoveMechanicAction;
 import by.mkwt.senla.training.carservice.view.actions.manage.order.AddOrderAction;

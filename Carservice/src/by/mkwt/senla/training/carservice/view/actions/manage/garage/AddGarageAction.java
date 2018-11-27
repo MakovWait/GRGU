@@ -1,5 +1,6 @@
 package by.mkwt.senla.training.carservice.view.actions.manage.garage;
 
+import by.mkwt.loaders.PermissionException;
 import by.mkwt.senla.training.carservice.api.CarService;
 import by.mkwt.senla.training.carservice.logic.exceptions.IllegalIdException;
 import by.mkwt.senla.training.carservice.logic.exceptions.IllegalItemLineImplException;
@@ -18,6 +19,9 @@ public class AddGarageAction implements Action {
             CarService.getInstance().getManageMaster().addGarage(InputReader.getInstance().listenInput(INFO_MESSAGE));
         } catch (IllegalItemLineImplException | IllegalIdException | ItemIsAlreadyExistException e) {
             ActionContentHolder.setContent(e.getMessage());
+            return;
+        } catch (PermissionException e) {
+            e.printStackTrace();
             return;
         }
 

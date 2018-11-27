@@ -1,5 +1,6 @@
-package by.mkwt.senla.training.carservice.ui.actions.manage.order;
+package by.mkwt.senla.training.carservice.view.actions.manage.order;
 
+import by.mkwt.loaders.PermissionException;
 import by.mkwt.senla.training.carservice.api.CarService;
 import by.mkwt.senla.training.carservice.logic.exceptions.NoSuchItemException;
 import by.mkwt.senla.training.ui.api.Action;
@@ -18,6 +19,8 @@ public class RemoveOrderAction implements Action {
         } catch (NoSuchItemException e) {
             ActionContentHolder.setContent(e.getMessage());
             return;
+        } catch (PermissionException e) {
+            e.printStackTrace();
         }
 
         ActionContentHolder.setContent("success");

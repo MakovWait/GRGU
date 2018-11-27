@@ -1,5 +1,6 @@
-package by.mkwt.senla.training.carservice.ui.actions.manage.order;
+package by.mkwt.senla.training.carservice.view.actions.manage.order;
 
+import by.mkwt.loaders.PermissionException;
 import by.mkwt.senla.training.carservice.api.CarService;
 import by.mkwt.senla.training.ui.api.Action;
 import by.mkwt.senla.training.ui.utils.ActionContentHolder;
@@ -12,7 +13,12 @@ public class ShiftDatesAction implements Action {
     @Override
     public void execute() {
         long currentId = InputReader.getInstance().parseIntoId(InputReader.getInstance().listenInput(INFO_MESSAGE));
-        CarService.getInstance().getRequestMaster().setDelayedOrder(currentId);
+        try {
+            CarService.getInstance().getManageMaster().setDelayedOrder(currentId);
+        } catch (PermissionException e) {
+            e.printStackTrace();
+            return;
+        }
         ActionContentHolder.setContent("Success");
     }
 }

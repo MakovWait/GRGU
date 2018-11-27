@@ -1,4 +1,4 @@
-package by.mkwt.senla.training.carservice.ui.actions.show.order.byperiod;
+package by.mkwt.senla.training.carservice.view.actions.show.order.byperiod;
 
 import by.mkwt.senla.training.carservice.api.CarService;
 import by.mkwt.senla.training.carservice.logic.models.items.OrderState;
