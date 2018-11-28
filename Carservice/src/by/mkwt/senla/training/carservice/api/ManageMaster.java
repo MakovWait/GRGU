@@ -22,6 +22,8 @@ public class ManageMaster {
     private MechanicManager mechanicManager;
     private Map<String, Boolean> permissions;
 
+    private List<Order> tmpCpyOrders;
+
     public ManageMaster(ScheduleManager scheduleManager,
                         GarageManager garageManager,
                         OrderManager orderManager,
@@ -33,6 +35,8 @@ public class ManageMaster {
         this.orderManager = orderManager;
         this.mechanicManager = mechanicManager;
         this.permissions = permissions;
+
+        tmpCpyOrders = new ArrayList<>();
     }
 
     public Garage getGarageById(Long id) throws IllegalIdException {
@@ -56,7 +60,7 @@ public class ManageMaster {
         } catch (NumberFormatException e) {
             throw new IllegalItemLineImplException();
         }
-}
+    }
 
     public void removeGarage(Long id) throws NoSuchItemException, PermissionException {
         if (!permissions.get("garage_manage_permission")) {
@@ -107,8 +111,13 @@ public class ManageMaster {
         }
     }
 
+    public void modifyOrder(Order cpyOrder, String orderStringImpl) {
+        Order newOrder = orderManager.getOrderFromLine(cpyOrder.getId().toString() +  "|" + orderStringImpl);
+        orderManager.updateOrder(newOrder);
+    }
+
     public void removeOrder(Long id) throws NoSuchItemException, PermissionException {
-        if (permissions.get("delete_orders_permission")) {
+        if (!permissions.get("delete_orders_permission")) {
             throw new PermissionException();
         }
         orderManager.removeOrderById(id);
@@ -136,7 +145,7 @@ public class ManageMaster {
      * Shift orders
      */
     public void setDelayedOrder(long orderId) throws PermissionException {
-        if (permissions.get("shift_dates_permission")) {
+        if (!permissions.get("shift_dates_permission")) {
             throw new PermissionException();
         }
 
@@ -169,5 +178,29 @@ public class ManageMaster {
         }
 
         return new ArrayList<>(result);
+    }
+
+    public void copyOrder(long orderId) throws IllegalIdException, CloneNotSupportedException {
+        Order currentOrder = orderManager.getOrderById(orderId);
+
+        if (currentOrder == null) {
+            throw new IllegalIdException();
+        }
+
+        tmpCpyOrders.add((Order) currentOrder.clone());
+    }
+
+    public Order getCpyOrderById(long id) throws IllegalIdException {
+        Order result = orderManager.getOrderByIdInCustomArray(tmpCpyOrders, id);
+
+        if (result == null) {
+            throw new IllegalIdException();
+        }
+
+        return result;
+    }
+
+    public List<Order> getTmpCpyOrders() {
+        return tmpCpyOrders;
     }
 }

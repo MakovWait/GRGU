@@ -3,7 +3,7 @@ package by.mkwt.senla.training.carservice.logic.models.items;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class Order {
+public class Order implements Cloneable {
 
     private Long id;
     private Date fillingDate;
@@ -13,7 +13,6 @@ public class Order {
     private OrderState state;
 
     public Order() {
-
     }
 
     public Order(Long id, Date fillingDate, Date startingDate, Date endingDate, BigDecimal price, OrderState state) {
@@ -85,5 +84,10 @@ public class Order {
 
     public void setState(OrderState state) {
         this.state = state;
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }

@@ -17,6 +17,16 @@ public class Mechanic {
         this.name = name;
     }
 
+    @Override
+    public String toString() {
+        return "Mechanic{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", busyness=" + busyness +
+                '}'+
+                "\n";
+    }
+
     public Long getId() {
         return id;
     }

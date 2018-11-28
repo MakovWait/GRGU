@@ -66,10 +66,14 @@ public class RequestMaster {
     }
 
     public List<Mechanic> getAllMechanicsOrderedBy(MechanicOrderableValues orderableValue) {
+        if (orderableValue == MechanicOrderableValues.byBusyness) {
+            return getAllMechanicsOrderedByBusyness();
+        }
+
         return mechanicManager.orderBy(orderableValue);
     }
 
-    public List<Mechanic> getAllMechanicsOrderedByBusyness() {
+    private List<Mechanic> getAllMechanicsOrderedByBusyness() {
         List<Mechanic> busyMechanics = new ArrayList<>();
         List<Mechanic> result = new ArrayList<>();
 

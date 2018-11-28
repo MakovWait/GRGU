@@ -12,6 +12,14 @@ public class Garage {
 
     }
 
+    @Override
+    public String toString() {
+        return "Garage{" +
+                "id=" + id +
+                '}' +
+                "\n";
+    }
+
     public Long getId() {
         return id;
     }

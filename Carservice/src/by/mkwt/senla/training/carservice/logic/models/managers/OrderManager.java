@@ -40,6 +40,11 @@ public class OrderManager {
         saveOrders();
     }
 
+    public void updateOrder(Order order) {
+        orders.put(order.getId(), order);
+        saveOrders();
+    }
+
     public void removeOrderById(Long id) throws NoSuchItemException {
         if (id != null && orders.containsKey(id)) {
             orders.remove(id);
@@ -86,6 +91,20 @@ public class OrderManager {
 
     public Order getOrderById(long id) {
         return orders.get(id);
+    }
+
+    public Order getOrderByIdInCustomArray(List<Order> orders, long id) {
+        if (orders == null) {
+            return null;
+        }
+
+        for (Order order : orders) {
+            if (order.getId().equals(id)) {
+                return order;
+            }
+        }
+
+        return null;
     }
 
     public void shiftEndingDates(List<Order> neededToChangeOrders, long shiftedTime) {

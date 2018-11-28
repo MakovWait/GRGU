@@ -19,10 +19,6 @@ public class CarService {
     private RequestMaster requestMaster;
     private ManageMaster manageMaster;
 
-    private boolean garageManagePermission;
-    private boolean shiftDatesPermission;
-    private boolean deleteOrdersPermission;
-
     private CarService(PropertyLoader loader) {
         loadComponents(loader);
     }
@@ -43,10 +39,6 @@ public class CarService {
     }
 
     private void loadComponents(PropertyLoader loader) {
-        garageManagePermission = Boolean.parseBoolean(loader.getProperty("manage_garages"));
-        shiftDatesPermission = Boolean.parseBoolean(loader.getProperty("shift_dates"));
-        deleteOrdersPermission = Boolean.parseBoolean(loader.getProperty("delete_orders"));
-
         ScheduleManager scheduleManager = new ScheduleManager(loader.getProperty("db.path_to_schedule"));
         GarageManager garageManager = new GarageManager(loader.getProperty("db.path_to_garage"));
         MechanicManager mechanicManager = new MechanicManager(loader.getProperty("db.path_to_mechanics"));
@@ -61,8 +53,6 @@ public class CarService {
 
         manageMaster = new ManageMaster(scheduleManager, garageManager, orderManager, mechanicManager, permissions);
     }
-
-
 
     public ManageMaster getManageMaster() {
         return manageMaster;

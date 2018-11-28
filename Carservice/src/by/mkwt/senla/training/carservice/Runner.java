@@ -2,6 +2,7 @@ package by.mkwt.senla.training.carservice;
 
 import by.mkwt.loaders.PropertyLoader;
 import by.mkwt.senla.training.carservice.api.CarService;
+import by.mkwt.senla.training.carservice.logic.exceptions.IllegalIdException;
 import by.mkwt.senla.training.carservice.view.Builder;
 import by.mkwt.senla.training.ui.api.MenuController;
 

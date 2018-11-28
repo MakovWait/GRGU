@@ -5,17 +5,16 @@ import by.mkwt.senla.training.carservice.logic.models.sorters.OrderOrderableValu
 import by.mkwt.senla.training.carservice.view.actions.manage.garage.AddGarageAction;
 import by.mkwt.senla.training.carservice.view.actions.manage.garage.RemoveGarageAction;
 import by.mkwt.senla.training.carservice.view.actions.manage.mechanic.AddMechanicAction;
-import by.mkwt.senla.training.carservice.ui.actions.manage.mechanic.RemoveMechanicAction;
-import by.mkwt.senla.training.carservice.view.actions.manage.order.AddOrderAction;
-import by.mkwt.senla.training.carservice.ui.actions.manage.order.RemoveOrderAction;
-import by.mkwt.senla.training.carservice.ui.actions.show.mechanic.ShowMechanicByOrderAction;
-import by.mkwt.senla.training.carservice.ui.actions.show.mechanic.all.ShowAllMechanicsAction;
-import by.mkwt.senla.training.carservice.ui.actions.show.mechanic.all.ShowAllOrderedByStateMechanicsAction;
-import by.mkwt.senla.training.carservice.ui.actions.show.order.active.ShowActiveOrderedByStateOrdersAction;
-import by.mkwt.senla.training.carservice.ui.actions.show.order.active.ShowActiveOrdersAction;
-import by.mkwt.senla.training.carservice.ui.actions.show.order.all.ShowAllOrderedByStateOrdersAction;
-import by.mkwt.senla.training.carservice.ui.actions.show.order.all.ShowAllOrdersAction;
-import by.mkwt.senla.training.carservice.ui.actions.show.schedule.ShowNearestFreeDateAction;
+import by.mkwt.senla.training.carservice.view.actions.manage.mechanic.RemoveMechanicAction;
+import by.mkwt.senla.training.carservice.view.actions.manage.order.*;
+import by.mkwt.senla.training.carservice.view.actions.show.mechanic.ShowMechanicByOrderAction;
+import by.mkwt.senla.training.carservice.view.actions.show.mechanic.all.ShowAllMechanicsAction;
+import by.mkwt.senla.training.carservice.view.actions.show.mechanic.all.ShowAllOrderedByStateMechanicsAction;
+import by.mkwt.senla.training.carservice.view.actions.show.order.active.ShowActiveOrderedByStateOrdersAction;
+import by.mkwt.senla.training.carservice.view.actions.show.order.active.ShowActiveOrdersAction;
+import by.mkwt.senla.training.carservice.view.actions.show.order.all.ShowAllOrderedByStateOrdersAction;
+import by.mkwt.senla.training.carservice.view.actions.show.order.all.ShowAllOrdersAction;
+import by.mkwt.senla.training.carservice.view.actions.show.schedule.ShowNearestFreeDateAction;
 import by.mkwt.senla.training.ui.api.MenuBuilder;
 import by.mkwt.senla.training.ui.structure.Menu;
 import by.mkwt.senla.training.ui.structure.MenuItem;
@@ -173,6 +172,14 @@ public class Builder implements MenuBuilder {
                 ).addMenuItem(
                         new MenuItem("Remove")
                                 .setAction(new RemoveOrderAction())
+                )
+                .addMenuItem(
+                        new MenuItem("Copy")
+                                .setAction(new CopyOrderAction())
+                )
+                .addMenuItem(
+                        new MenuItem("Modify")
+                                .setAction(new ModifyOrderAction())
                 );
 
         orderOptionsMenu = new Menu("Order options")
