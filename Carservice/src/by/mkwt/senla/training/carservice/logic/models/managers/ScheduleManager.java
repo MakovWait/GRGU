@@ -18,8 +18,10 @@ public class ScheduleManager {
     private LoaderComponent<ScheduleItem> loader;
     private Set<ScheduleItem> scheduleItems;
 
+    private final String PATH_TO_CSV_FILE = "./resources/database/csv/schedule.csv";
+
     public ScheduleManager(final String PATH_TO_FILE) {
-        loader = new LoaderComponent<>(new ScheduleParser(), PATH_TO_FILE);
+        loader = new LoaderComponent<>(new ScheduleParser(), PATH_TO_FILE, PATH_TO_CSV_FILE);
         loadSchedule();
     }
 

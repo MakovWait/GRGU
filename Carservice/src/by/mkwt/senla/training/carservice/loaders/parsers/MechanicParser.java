@@ -22,12 +22,11 @@ public class MechanicParser implements ItemParser<Mechanic> {
     }
 
     @Override
-    public String getLineFrom(Mechanic item) {
-        String[] result = new String[]{
+    public String[] getLineMassFrom(Mechanic item) {
+        return new String[]{
                 String.valueOf(item.getId()),
                 item.getName()
         };
+   }
 
-        return String.join(LoaderComponent.BORDER, result);
-    }
 }

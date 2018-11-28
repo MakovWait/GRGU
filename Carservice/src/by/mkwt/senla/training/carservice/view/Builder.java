@@ -3,8 +3,12 @@ package by.mkwt.senla.training.carservice.view;
 import by.mkwt.senla.training.carservice.logic.models.sorters.MechanicOrderableValues;
 import by.mkwt.senla.training.carservice.logic.models.sorters.OrderOrderableValues;
 import by.mkwt.senla.training.carservice.view.actions.manage.garage.AddGarageAction;
+import by.mkwt.senla.training.carservice.view.actions.manage.garage.ExportGarageAction;
+import by.mkwt.senla.training.carservice.view.actions.manage.garage.ImportGarageAction;
 import by.mkwt.senla.training.carservice.view.actions.manage.garage.RemoveGarageAction;
 import by.mkwt.senla.training.carservice.view.actions.manage.mechanic.AddMechanicAction;
+import by.mkwt.senla.training.carservice.view.actions.manage.mechanic.ExportMechanicAction;
+import by.mkwt.senla.training.carservice.view.actions.manage.mechanic.ImportMechanicAction;
 import by.mkwt.senla.training.carservice.view.actions.manage.mechanic.RemoveMechanicAction;
 import by.mkwt.senla.training.carservice.view.actions.manage.order.*;
 import by.mkwt.senla.training.carservice.view.actions.show.mechanic.ShowMechanicByOrderAction;
@@ -48,7 +52,16 @@ public class Builder implements MenuBuilder {
                 .addMenuItem(
                         new MenuItem("Remove")
                                 .setAction(new RemoveGarageAction())
+                )
+                .addMenuItem(
+                        new MenuItem("Import")
+                                .setAction(new ImportGarageAction())
+                )
+                .addMenuItem(
+                        new MenuItem("Export")
+                                .setAction(new ExportGarageAction())
                 );
+
 
         showGarageMenu = new Menu("Show")
                 .addMenuItem(
@@ -96,6 +109,14 @@ public class Builder implements MenuBuilder {
                 )
                 .addMenuItem(new MenuItem("Remove")
                         .setAction(new RemoveMechanicAction())
+                )
+                .addMenuItem(
+                        new MenuItem("Import")
+                                .setAction(new ImportMechanicAction())
+                )
+                .addMenuItem(
+                        new MenuItem("Export")
+                                .setAction(new ExportMechanicAction())
                 );
 
         mechanicsOptionsMenu = new Menu("Mechanic options")
@@ -180,6 +201,14 @@ public class Builder implements MenuBuilder {
                 .addMenuItem(
                         new MenuItem("Modify")
                                 .setAction(new ModifyOrderAction())
+                )
+                .addMenuItem(
+                        new MenuItem("Import")
+                                .setAction(new ImportOrderAction())
+                )
+                .addMenuItem(
+                        new MenuItem("Export")
+                                .setAction(new ExportOrderAction())
                 );
 
         orderOptionsMenu = new Menu("Order options")

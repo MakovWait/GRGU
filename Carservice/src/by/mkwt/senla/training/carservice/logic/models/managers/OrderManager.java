@@ -6,12 +6,14 @@ import by.mkwt.senla.training.carservice.logic.exceptions.IllegalIdException;
 import by.mkwt.senla.training.carservice.logic.exceptions.IllegalItemLineImplException;
 import by.mkwt.senla.training.carservice.logic.exceptions.ItemIsAlreadyExistException;
 import by.mkwt.senla.training.carservice.logic.exceptions.NoSuchItemException;
+import by.mkwt.senla.training.carservice.logic.models.items.Mechanic;
 import by.mkwt.senla.training.carservice.logic.models.items.Order;
 import by.mkwt.senla.training.carservice.logic.models.items.OrderState;
 import by.mkwt.senla.training.carservice.logic.models.sorters.OrderOrderableValues;
 import by.mkwt.senla.training.carservice.logic.models.sorters.OrderSorter;
 import com.sun.org.apache.xpath.internal.operations.Or;
 
+import java.io.FileNotFoundException;
 import java.util.*;
 
 public class OrderManager {
@@ -20,8 +22,11 @@ public class OrderManager {
     private OrderSorter sorter;
     private Map<Long, Order> orders;
 
+
     public OrderManager(final String PATH_TO_FILE) {
-        loader = new LoaderComponent<>(new OrderParser(), PATH_TO_FILE);
+        final String PATH_TO_CSV_FILE = "./resources/database/csv/orders.csv";
+
+        loader = new LoaderComponent<>(new OrderParser(), PATH_TO_FILE, PATH_TO_CSV_FILE);
         sorter = new OrderSorter();
 
         loadAllOrders();
@@ -43,6 +48,18 @@ public class OrderManager {
     public void updateOrder(Order order) {
         orders.put(order.getId(), order);
         saveOrders();
+    }
+
+    public void importFromCsv() throws FileNotFoundException {
+        List<Order> importItems = loader.getItemsFromCsvFile();
+
+        for (Order item : importItems) {
+            orders.put(item.getId(), item);
+        }
+    }
+
+    public void exportToCsv() {
+        loader.writeItemsToCsvFile(getAllOrders());
     }
 
     public void removeOrderById(Long id) throws NoSuchItemException {

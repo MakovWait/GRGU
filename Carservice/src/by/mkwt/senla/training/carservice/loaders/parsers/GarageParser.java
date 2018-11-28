@@ -23,12 +23,10 @@ public class GarageParser implements ItemParser<Garage> {
     }
 
     @Override
-    public String getLineFrom(Garage item) {
-        String[] result = new String[]{
+    public String[] getLineMassFrom(Garage item) {
+        return new String[]{
                 String.valueOf(item.getId())
         };
-
-        return String.join(LoaderComponent.BORDER, result);
     }
 
 }

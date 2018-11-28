@@ -9,6 +9,7 @@ import by.mkwt.senla.training.carservice.logic.exceptions.NoSuchItemException;
 import by.mkwt.senla.training.carservice.logic.models.items.Garage;
 import by.mkwt.senla.training.carservice.logic.models.items.Mechanic;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,8 +20,11 @@ public class GarageManager {
     private LoaderComponent<Garage> loader;
     private Map<Long, Garage> garages;
 
+
     public GarageManager(final String PATH_TO_FILE) {
-        loader = new LoaderComponent<>(new GarageParser(), PATH_TO_FILE);
+        final String PATH_TO_CSV_FILE = "./resources/database/csv/garages.csv";
+
+        loader = new LoaderComponent<>(new GarageParser(), PATH_TO_FILE, PATH_TO_CSV_FILE);
 
         loadAllGarages();
     }
@@ -46,6 +50,18 @@ public class GarageManager {
 
         garages.remove(id);
         saveGarages();
+    }
+
+    public void importFromCsv() throws FileNotFoundException {
+        List<Garage> importItems = loader.getItemsFromCsvFile();
+
+        for (Garage item : importItems) {
+            garages.put(item.getId(), item);
+        }
+    }
+
+    public void exportToCsv() {
+        loader.writeItemsToCsvFile(getAllGarages());
     }
 
     public Garage getGarageFromLine(String line) {

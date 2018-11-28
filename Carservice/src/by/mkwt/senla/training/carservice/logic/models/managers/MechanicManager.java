@@ -6,10 +6,12 @@ import by.mkwt.senla.training.carservice.logic.exceptions.IllegalIdException;
 import by.mkwt.senla.training.carservice.logic.exceptions.IllegalItemLineImplException;
 import by.mkwt.senla.training.carservice.logic.exceptions.ItemIsAlreadyExistException;
 import by.mkwt.senla.training.carservice.logic.exceptions.NoSuchItemException;
+import by.mkwt.senla.training.carservice.logic.models.items.Garage;
 import by.mkwt.senla.training.carservice.logic.models.items.Mechanic;
 import by.mkwt.senla.training.carservice.logic.models.sorters.MechanicOrderableValues;
 import by.mkwt.senla.training.carservice.logic.models.sorters.MechanicSorter;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,7 +24,9 @@ public class MechanicManager {
     private Map<Long, Mechanic> mechanics;
 
     public MechanicManager(final String PATH_TO_FILE) {
-        loader = new LoaderComponent<>(new MechanicParser(), PATH_TO_FILE);
+        final String PATH_TO_CSV_FILE = "./resources/database/csv/mechanics.csv";
+
+        loader = new LoaderComponent<>(new MechanicParser(), PATH_TO_FILE, PATH_TO_CSV_FILE);
         sorter = new MechanicSorter();
 
         loadAllMechanics();
@@ -39,6 +43,18 @@ public class MechanicManager {
 
         mechanics.put(mechanic.getId(), mechanic);
         saveMechanics();
+    }
+
+    public void importFromCsv() throws FileNotFoundException {
+        List<Mechanic> importItems = loader.getItemsFromCsvFile();
+
+        for (Mechanic item : importItems) {
+            mechanics.put(item.getId(), item);
+        }
+    }
+
+    public void exportToCsv() {
+        loader.writeItemsToCsvFile(getAllMechanics());
     }
 
     public void removeMechanicById(Long id) throws NoSuchItemException {

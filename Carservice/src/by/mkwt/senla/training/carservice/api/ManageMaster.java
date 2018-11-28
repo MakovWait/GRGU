@@ -12,6 +12,7 @@ import by.mkwt.senla.training.carservice.logic.models.managers.OrderManager;
 import by.mkwt.senla.training.carservice.logic.models.managers.ScheduleManager;
 import com.sun.org.apache.xpath.internal.operations.Or;
 
+import java.io.FileNotFoundException;
 import java.util.*;
 
 public class ManageMaster {
@@ -70,6 +71,14 @@ public class ManageMaster {
         garageManager.removeGarageById(id);
     }
 
+    public void importGaragesFromCsv() throws FileNotFoundException {
+        garageManager.importFromCsv();
+    }
+
+    public void exportGaragesToCsv() {
+        garageManager.exportToCsv();
+    }
+
     public void addMechanic(String mechanicStringImpl) throws IllegalIdException, ItemIsAlreadyExistException, IllegalItemLineImplException {
         try {
             Mechanic tmp = mechanicManager.getMechanicFromLine(mechanicStringImpl);
@@ -81,6 +90,14 @@ public class ManageMaster {
 
     public void removeMechanic(Long id) throws NoSuchItemException {
         mechanicManager.removeMechanicById(id);
+    }
+
+    public void importMechanicsFromCsv() throws FileNotFoundException {
+        mechanicManager.importFromCsv();
+    }
+
+    public void exportMechanicsToCsv() {
+        mechanicManager.exportToCsv();
     }
 
     public Mechanic getMechanicById(Long id) throws IllegalIdException {
@@ -121,6 +138,14 @@ public class ManageMaster {
             throw new PermissionException();
         }
         orderManager.removeOrderById(id);
+    }
+
+    public void importOrdersFromCsv() throws FileNotFoundException {
+        orderManager.importFromCsv();
+    }
+
+    public void exportOrdersToCsv() {
+        orderManager.exportToCsv();
     }
 
     public void closeOrder(Long id) throws IllegalIdException {

@@ -41,8 +41,8 @@ public class OrderParser implements ItemParser<Order> {
     }
 
     @Override
-    public String getLineFrom(Order item) {
-        String[] result = new String[]{
+    public String[] getLineMassFrom(Order item) {
+        return new String[]{
                 String.valueOf(item.getId()),
                 String.valueOf(item.getFillingDate()),
                 String.valueOf(item.getStartingDate()),
@@ -50,8 +50,6 @@ public class OrderParser implements ItemParser<Order> {
                 String.valueOf(item.getPrice()),
                 String.valueOf(item.getState())
         };
-
-        return String.join(LoaderComponent.BORDER, result);
-    }
+}
 
 }

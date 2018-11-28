@@ -39,14 +39,12 @@ public class ScheduleParser implements ItemParser<ScheduleItem> {
     }
 
     @Override
-    public String getLineFrom(ScheduleItem item) {
-        String[] result = new String[]{
+    public String[] getLineMassFrom(ScheduleItem item) {
+        return new String[]{
                 String.valueOf(item.getDate()),
                 String.valueOf(item.getOrderId()),
                 String.valueOf(item.getMechanicId()),
                 String.valueOf(item.getGarageId())
         };
-
-        return String.join(LoaderComponent.BORDER, result);
     }
 }

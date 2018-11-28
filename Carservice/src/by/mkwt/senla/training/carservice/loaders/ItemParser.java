@@ -6,5 +6,6 @@ public interface ItemParser<T> {
 
     T getItemFrom(String line);
 
-    String getLineFrom(T item);
+    String[] getLineMassFrom(T item);
+
 }

@@ -1,36 +1,37 @@
 package by.mkwt.senla.training.carservice.loaders;
 
+import by.mkwt.senla.training.carservice.logic.models.items.Mechanic;
+import javenue.csv.Csv;
+
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
 public class LoaderComponent<T> {
 
     public static final String DELIMITER = "\\|";
-    public static final String BORDER = "|";
+    private static final String BORDER = "|";
 
     private ItemParser<T> itemParser;
 
-    private String[] lines;
-    private int counter = -1;
-
-    private String pathToFile;
-
-    private boolean isStart = false;
+    private String pathToBinFile;
+    private String pathToCsvFile;
 
     private FileInputStream file;
     private ObjectInputStream fileIn;
 
-    public LoaderComponent(ItemParser<T> itemParser, String pathToFile) {
+    public LoaderComponent(ItemParser<T> itemParser, String pathToBinFile, String pathToCsvFile) {
         this.itemParser = Objects.requireNonNull(itemParser, "Item parser shouldn't be null");
 
-        this.pathToFile = pathToFile;
+        this.pathToBinFile = pathToBinFile;
+        this.pathToCsvFile = pathToCsvFile;
     }
 
     public void start() {
-        isStart = true;
         try {
-            file = new FileInputStream(pathToFile);
+            file = new FileInputStream(pathToBinFile);
             fileIn = new ObjectInputStream(file);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -49,7 +50,6 @@ public class LoaderComponent<T> {
     }
 
     public T getNextItem() {
-
         T result = null;
 
         try {
@@ -69,7 +69,7 @@ public class LoaderComponent<T> {
     public void writeItemsToFile(Collection<T> items) {
         Objects.requireNonNull(items, "Writable items should be initialized first");
 
-        try (FileOutputStream fileOut = new FileOutputStream(pathToFile); ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
+        try (FileOutputStream fileOut = new FileOutputStream(pathToBinFile); ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
             for (T item : items) {
                 out.writeObject(item);
             }
@@ -77,5 +77,35 @@ public class LoaderComponent<T> {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public List<T> getItemsFromCsvFile() throws FileNotFoundException {
+        List<T> result = new ArrayList<>();
+
+
+        Csv.Reader reader = new Csv.Reader(new FileReader(pathToCsvFile)).delimiter(';');
+        List<String> line;
+        while ((line = reader.readLine()) != null) {
+            result.add(itemParser.getItemFrom(String.join(BORDER, line)));
+        }
+        reader.close();
+
+        return result;
+    }
+
+    public void writeItemsToCsvFile(Collection<T> items) {
+        Objects.requireNonNull(items, "Writable items should be initialized first");
+
+        Csv.Writer writer = new Csv.Writer(pathToCsvFile).delimiter(';');
+
+        for (T item : items) {
+            String[] lines = itemParser.getLineMassFrom(item);
+            for (String line : lines) {
+                writer.value(line);
+            }
+            writer.newLine();
+        }
+
+        writer.close();
     }
 }
