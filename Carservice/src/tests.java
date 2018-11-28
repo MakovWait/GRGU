@@ -1,18 +1,25 @@
+import by.mkwt.senla.training.carservice.logic.models.items.Garage;
 import by.mkwt.senla.training.carservice.logic.models.items.Order;
 import by.mkwt.senla.training.carservice.logic.models.items.OrderState;
 
+import java.io.*;
 import java.math.BigDecimal;
 import java.util.Date;
 
 public class tests {
     public static void main(String[] args) throws CloneNotSupportedException {
-        Order order = new Order(0L, new Date(0), new Date(0), new Date(0), new BigDecimal("2"), OrderState.inPlan);
+        /*Garage garage = new Garage(1L);
+        Garage garage1 = new Garage(2L);
 
-        Order nOrder = (Order) order.clone();
+        try (FileOutputStream fileOut = new FileOutputStream("./garages"); ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
+            out.writeObject(garage);
+            out.writeObject(garage1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
 
-        nOrder.setPrice(new BigDecimal("20"));
-        System.out.println("Original" + order);
-        System.out.println("****************************");
-        System.out.println("Clone" + nOrder);
+
+        Garage garage = null;
+
     }
 }

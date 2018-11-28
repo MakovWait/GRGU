@@ -1,14 +1,15 @@
 package by.mkwt.senla.training.carservice.logic.models.items;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class ScheduleItem {
+public class ScheduleItem implements Serializable{
 
+    private static final long serialVersionUID = -8743159935353142357L;
     private Date date;
     private Long orderId;
     private Long mechanicId;
     private Long garageId;
-
 
     public ScheduleItem() {
 

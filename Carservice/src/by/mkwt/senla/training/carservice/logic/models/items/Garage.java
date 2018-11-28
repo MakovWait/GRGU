@@ -1,7 +1,10 @@
 package by.mkwt.senla.training.carservice.logic.models.items;
 
-public class Garage {
+import java.io.Serializable;
 
+public class Garage implements Serializable{
+
+    private static final long serialVersionUID = 8052444064394181518L;
     private Long id;
 
     public Garage(Long id) {

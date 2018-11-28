@@ -72,10 +72,13 @@ public class MechanicManager {
 
     private void loadAllMechanics() {
         mechanics = new HashMap<>();
+
+        loader.start();
         Mechanic mechanic;
         while ((mechanic = loader.getNextItem()) != null) {
             mechanics.put(mechanic.getId(), mechanic);
         }
+        loader.stop();
     }
 
 

@@ -39,10 +39,10 @@ public class CarService {
     }
 
     private void loadComponents(PropertyLoader loader) {
-        ScheduleManager scheduleManager = new ScheduleManager(loader.getProperty("db.path_to_schedule"));
-        GarageManager garageManager = new GarageManager(loader.getProperty("db.path_to_garage"));
-        MechanicManager mechanicManager = new MechanicManager(loader.getProperty("db.path_to_mechanics"));
-        OrderManager orderManager = new OrderManager(loader.getProperty("db.path_to_orders"));
+        ScheduleManager scheduleManager = new ScheduleManager(loader.getProperty("bin.path_to_schedule"));
+        GarageManager garageManager = new GarageManager(loader.getProperty("bin.path_to_garage"));
+        MechanicManager mechanicManager = new MechanicManager(loader.getProperty("bin.path_to_mechanics"));
+        OrderManager orderManager = new OrderManager(loader.getProperty("bin.path_to_orders"));
 
         requestMaster = new RequestMaster(scheduleManager, garageManager, orderManager, mechanicManager);
 

@@ -46,10 +46,13 @@ public class ScheduleManager {
     private void loadSchedule() {
         scheduleItems = new HashSet<>();
 
+        loader.start();
         ScheduleItem scheduleItem;
         while ((scheduleItem = loader.getNextItem()) != null) {
             scheduleItems.add(scheduleItem);
         }
+
+        loader.stop();
     }
 
     private void saveSchedule() {

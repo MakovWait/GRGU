@@ -1,10 +1,12 @@
 package by.mkwt.senla.training.carservice.logic.models.items;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class Order implements Cloneable {
+public class Order implements Serializable, Cloneable {
 
+    private static final long serialVersionUID = 1528536481036760191L;
     private Long id;
     private Date fillingDate;
     private Date startingDate;

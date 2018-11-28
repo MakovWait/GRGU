@@ -133,10 +133,12 @@ public class OrderManager {
     private void loadAllOrders() {
         orders = new HashMap<>();
 
+        loader.start();
         Order order;
         while ((order = loader.getNextItem()) != null) {
             orders.put(order.getId(), order);
         }
+        loader.stop();
     }
 
     private void saveOrders() {

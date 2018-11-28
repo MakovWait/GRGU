@@ -1,7 +1,10 @@
 package by.mkwt.senla.training.carservice.logic.models.items;
 
-public class Mechanic {
+import java.io.Serializable;
 
+public class Mechanic implements Serializable{
+
+    private static final long serialVersionUID = 7510526852689274225L;
     private Long id;
     private String name;
 

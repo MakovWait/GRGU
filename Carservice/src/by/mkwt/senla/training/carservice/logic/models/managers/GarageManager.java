@@ -63,10 +63,12 @@ public class GarageManager {
     private void loadAllGarages() {
         garages = new HashMap<>();
 
+        loader.start();
         Garage garage;
         while ((garage = loader.getNextItem()) != null) {
             garages.put(garage.getId(), garage);
         }
+        loader.stop();
     }
 
     private void saveGarages() {

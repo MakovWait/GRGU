@@ -1,12 +1,7 @@
 package by.mkwt.senla.training.carservice.loaders;
 
-import by.mkwt.senla.training.carservice.logic.exceptions.IllegalItemLineImplException;
-import com.senla.training.TextFileWorker;
-import org.apache.log4j.Logger;
-
-import java.util.ArrayList;
+import java.io.*;
 import java.util.Collection;
-import java.util.List;
 import java.util.Objects;
 
 public class LoaderComponent<T> {
@@ -15,30 +10,56 @@ public class LoaderComponent<T> {
     public static final String BORDER = "|";
 
     private ItemParser<T> itemParser;
-    private TextFileWorker textFileWorker;
 
     private String[] lines;
     private int counter = -1;
 
+    private String pathToFile;
+
+    private boolean isStart = false;
+
+    private FileInputStream file;
+    private ObjectInputStream fileIn;
+
     public LoaderComponent(ItemParser<T> itemParser, String pathToFile) {
         this.itemParser = Objects.requireNonNull(itemParser, "Item parser shouldn't be null");
-        textFileWorker = new TextFileWorker(Objects.requireNonNull(pathToFile));
 
-        lines = textFileWorker.readFromFile();
+        this.pathToFile = pathToFile;
+    }
+
+    public void start() {
+        isStart = true;
+        try {
+            file = new FileInputStream(pathToFile);
+            fileIn = new ObjectInputStream(file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void stop() {
+        try {
+            file.close();
+            fileIn.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public T getNextItem() {
-        if (counterIncrement()) {
-            return itemParser.getItemFrom(lines[counter]);
+
+        T result = null;
+
+        try {
+            result = (T) fileIn.readObject();
+        } catch (IOException e) {
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
 
-        return null;
-    }
-
-    private boolean counterIncrement() {
-        counter++;
-
-        return counter < lines.length;
+        return result;
     }
 
     public T getItemFromLine(String line) {
@@ -47,12 +68,14 @@ public class LoaderComponent<T> {
 
     public void writeItemsToFile(Collection<T> items) {
         Objects.requireNonNull(items, "Writable items should be initialized first");
-        List<String> result = new ArrayList<>();
 
-        for (T item : items) {
-            result.add(itemParser.getLineFrom(item));
+        try (FileOutputStream fileOut = new FileOutputStream(pathToFile); ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
+            for (T item : items) {
+                out.writeObject(item);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
-        textFileWorker.writeToFile(result.toArray(new String[items.size()]));
     }
 }
