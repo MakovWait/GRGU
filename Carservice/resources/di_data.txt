@@ -1,0 +1,1 @@
+by.mkwt.senla.training.carservice.api.managers.GarageManager = by.mkwt.senla.training.carservice.logic.models.managers.GarageManager;

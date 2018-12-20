@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 @AppConfig
-public class GarageManager {
+public class GarageManager implements by.mkwt.senla.training.carservice.api.managers.GarageManager{
 
     @ConfigProperty(propertyName = "bin.path_to_garage")
     private String pathToFile = null;
