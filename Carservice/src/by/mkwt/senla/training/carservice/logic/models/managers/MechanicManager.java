@@ -2,6 +2,9 @@ package by.mkwt.senla.training.carservice.logic.models.managers;
 
 import by.mkwt.senla.training.carservice.loaders.LoaderComponent;
 import by.mkwt.senla.training.carservice.loaders.parsers.MechanicParser;
+import by.mkwt.senla.training.carservice.logic.annotations.AppConfig;
+import by.mkwt.senla.training.carservice.logic.annotations.ConfigProperty;
+import by.mkwt.senla.training.carservice.logic.annotations.Loadable;
 import by.mkwt.senla.training.carservice.logic.exceptions.IllegalIdException;
 import by.mkwt.senla.training.carservice.logic.exceptions.IllegalItemLineImplException;
 import by.mkwt.senla.training.carservice.logic.exceptions.ItemIsAlreadyExistException;
@@ -17,19 +20,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@AppConfig
 public class MechanicManager {
+
+    @ConfigProperty(propertyName = "bin.path_to_mechanics")
+    private String pathToFile = null;
+
+    @ConfigProperty(propertyName = "db.path_to_csv_mechanics")
+    private String pathToCsvFile = null;
 
     private LoaderComponent<Mechanic> loader;
     private MechanicSorter sorter;
     private Map<Long, Mechanic> mechanics;
 
-    public MechanicManager(final String PATH_TO_FILE) {
-        final String PATH_TO_CSV_FILE = "./resources/database/csv/mechanics.csv";
-
-        loader = new LoaderComponent<>(new MechanicParser(), PATH_TO_FILE, PATH_TO_CSV_FILE);
+    public MechanicManager() {
         sorter = new MechanicSorter();
-
-        loadAllMechanics();
     }
 
     public void addMechanic(Mechanic mechanic) throws IllegalIdException, ItemIsAlreadyExistException {
@@ -86,7 +91,11 @@ public class MechanicManager {
         loader.writeItemsToFile(mechanics.values());
     }
 
+    @Loadable
     private void loadAllMechanics() {
+
+        loader = new LoaderComponent<>(new MechanicParser(), pathToFile, pathToCsvFile);
+
         mechanics = new HashMap<>();
 
         loader.start();

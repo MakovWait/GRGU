@@ -2,6 +2,9 @@ package by.mkwt.senla.training.carservice.logic.models.managers;
 
 import by.mkwt.senla.training.carservice.loaders.LoaderComponent;
 import by.mkwt.senla.training.carservice.loaders.parsers.OrderParser;
+import by.mkwt.senla.training.carservice.logic.annotations.AppConfig;
+import by.mkwt.senla.training.carservice.logic.annotations.ConfigProperty;
+import by.mkwt.senla.training.carservice.logic.annotations.Loadable;
 import by.mkwt.senla.training.carservice.logic.exceptions.IllegalIdException;
 import by.mkwt.senla.training.carservice.logic.exceptions.IllegalItemLineImplException;
 import by.mkwt.senla.training.carservice.logic.exceptions.ItemIsAlreadyExistException;
@@ -16,20 +19,21 @@ import com.sun.org.apache.xpath.internal.operations.Or;
 import java.io.FileNotFoundException;
 import java.util.*;
 
+@AppConfig
 public class OrderManager {
+
+    @ConfigProperty(propertyName = "bin.path_to_orders")
+    private String pathToFile = null;
+
+    @ConfigProperty(propertyName = "db.path_to_csv_orders")
+    private String pathToCsvFile = null;
 
     private LoaderComponent<Order> loader;
     private OrderSorter sorter;
     private Map<Long, Order> orders;
 
-
-    public OrderManager(final String PATH_TO_FILE) {
-        final String PATH_TO_CSV_FILE = "./resources/database/csv/orders.csv";
-
-        loader = new LoaderComponent<>(new OrderParser(), PATH_TO_FILE, PATH_TO_CSV_FILE);
+    public OrderManager() {
         sorter = new OrderSorter();
-
-        loadAllOrders();
     }
 
     public void addOrder(Order order) throws IllegalIdException, ItemIsAlreadyExistException {
@@ -147,7 +151,10 @@ public class OrderManager {
         return loader.getItemFromLine(line);
     }
 
+    @Loadable
     private void loadAllOrders() {
+        loader = new LoaderComponent<>(new OrderParser(), pathToFile, pathToCsvFile);
+
         orders = new HashMap<>();
 
         loader.start();

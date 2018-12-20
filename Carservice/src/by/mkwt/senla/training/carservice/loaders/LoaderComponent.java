@@ -1,6 +1,5 @@
 package by.mkwt.senla.training.carservice.loaders;
 
-import by.mkwt.senla.training.carservice.logic.models.items.Mechanic;
 import javenue.csv.Csv;
 
 import java.io.*;
@@ -33,8 +32,6 @@ public class LoaderComponent<T> {
         try {
             file = new FileInputStream(pathToBinFile);
             fileIn = new ObjectInputStream(file);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -69,7 +66,10 @@ public class LoaderComponent<T> {
     public void writeItemsToFile(Collection<T> items) {
         Objects.requireNonNull(items, "Writable items should be initialized first");
 
-        try (FileOutputStream fileOut = new FileOutputStream(pathToBinFile); ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
+        try (
+                FileOutputStream fileOut = new FileOutputStream(pathToBinFile);
+                ObjectOutputStream out = new ObjectOutputStream(fileOut)
+        ) {
             for (T item : items) {
                 out.writeObject(item);
             }
@@ -81,7 +81,6 @@ public class LoaderComponent<T> {
 
     public List<T> getItemsFromCsvFile() throws FileNotFoundException {
         List<T> result = new ArrayList<>();
-
 
         Csv.Reader reader = new Csv.Reader(new FileReader(pathToCsvFile)).delimiter(';');
         List<String> line;

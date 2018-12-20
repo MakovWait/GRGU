@@ -1,41 +1,44 @@
 package by.mkwt.senla.training.carservice.api;
 
-import by.mkwt.loaders.PermissionException;
-import by.mkwt.senla.training.carservice.logic.exceptions.IllegalIdException;
-import by.mkwt.senla.training.carservice.logic.exceptions.IllegalItemLineImplException;
-import by.mkwt.senla.training.carservice.logic.exceptions.ItemIsAlreadyExistException;
-import by.mkwt.senla.training.carservice.logic.exceptions.NoSuchItemException;
+import by.mkwt.senla.training.carservice.logic.annotations.AppConfig;
+import by.mkwt.senla.training.carservice.logic.annotations.ConfigProperty;
+import by.mkwt.senla.training.carservice.logic.annotations.PropertyType;
+import by.mkwt.senla.training.carservice.logic.exceptions.*;
 import by.mkwt.senla.training.carservice.logic.models.items.*;
 import by.mkwt.senla.training.carservice.logic.models.managers.GarageManager;
 import by.mkwt.senla.training.carservice.logic.models.managers.MechanicManager;
 import by.mkwt.senla.training.carservice.logic.models.managers.OrderManager;
 import by.mkwt.senla.training.carservice.logic.models.managers.ScheduleManager;
-import com.sun.org.apache.xpath.internal.operations.Or;
 
 import java.io.FileNotFoundException;
 import java.util.*;
 
+@AppConfig
 public class ManageMaster {
 
     private ScheduleManager scheduleManager;
     private GarageManager garageManager;
     private OrderManager orderManager;
     private MechanicManager mechanicManager;
-    private Map<String, Boolean> permissions;
+
+    @ConfigProperty(propertyName = "op.garage_manage_permission", type = PropertyType.Boolean)
+    private boolean garageManagePermission;
+    @ConfigProperty(propertyName = "op.shift_dates_permission", type = PropertyType.Boolean)
+    private boolean shiftDatesPermission;
+    @ConfigProperty(propertyName = "op.delete_orders_permission", type = PropertyType.Boolean)
+    private boolean deleteOrdersPermission;
 
     private List<Order> tmpCpyOrders;
 
     public ManageMaster(ScheduleManager scheduleManager,
                         GarageManager garageManager,
                         OrderManager orderManager,
-                        MechanicManager mechanicManager,
-                        Map<String, Boolean> permissions) {
+                        MechanicManager mechanicManager) {
 
         this.scheduleManager = scheduleManager;
         this.garageManager = garageManager;
         this.orderManager = orderManager;
         this.mechanicManager = mechanicManager;
-        this.permissions = permissions;
 
         tmpCpyOrders = new ArrayList<>();
     }
@@ -51,7 +54,7 @@ public class ManageMaster {
     }
 
     public void addGarage(String garageStringImpl) throws IllegalIdException, ItemIsAlreadyExistException, IllegalItemLineImplException, PermissionException {
-        if (!permissions.get("garage_manage_permission")) {
+        if (!garageManagePermission) {
             throw new PermissionException();
         }
 
@@ -64,7 +67,7 @@ public class ManageMaster {
     }
 
     public void removeGarage(Long id) throws NoSuchItemException, PermissionException {
-        if (!permissions.get("garage_manage_permission")) {
+        if (!garageManagePermission) {
             throw new PermissionException();
         }
 
@@ -134,7 +137,7 @@ public class ManageMaster {
     }
 
     public void removeOrder(Long id) throws NoSuchItemException, PermissionException {
-        if (!permissions.get("delete_orders_permission")) {
+        if (!deleteOrdersPermission) {
             throw new PermissionException();
         }
         orderManager.removeOrderById(id);
@@ -170,7 +173,7 @@ public class ManageMaster {
      * Shift orders
      */
     public void setDelayedOrder(long orderId) throws PermissionException {
-        if (!permissions.get("shift_dates_permission")) {
+        if (!shiftDatesPermission) {
             throw new PermissionException();
         }
 

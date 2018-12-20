@@ -3,3 +3,7 @@
 22:44:58,927 ERROR main OrderParser:getItemFrom:33 - java.text.ParseException: Unparseable date: "Thu Jan 01 03:00:00 MSK 1970"
 22:44:58,932 ERROR main OrderParser:getItemFrom:33 - java.text.ParseException: Unparseable date: "Thu Jan 01 03:00:00 MSK 1970"
 23:29:47,463 ERROR main CarService:getInstance:34 - Method CarService.load should be execute first
+02:27:35,446 ERROR main OrderParser:getItemFrom:32 - java.text.ParseException: Unparseable date: "Tue Mar 02 00:00:00 MSK 17"
+02:27:35,468 ERROR main OrderParser:getItemFrom:32 - java.text.ParseException: Unparseable date: "Tue Mar 02 00:00:00 MSK 17"
+02:30:18,445 ERROR main OrderParser:getItemFrom:32 - java.text.ParseException: Unparseable date: "Tue Mar 02 00:00:00 MSK 17"
+02:30:18,448 ERROR main OrderParser:getItemFrom:32 - java.text.ParseException: Unparseable date: "Tue Mar 02 00:00:00 MSK 17"

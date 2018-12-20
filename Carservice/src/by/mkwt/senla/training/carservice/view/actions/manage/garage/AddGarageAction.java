@@ -1,10 +1,10 @@
 package by.mkwt.senla.training.carservice.view.actions.manage.garage;
 
-import by.mkwt.loaders.PermissionException;
 import by.mkwt.senla.training.carservice.api.CarService;
 import by.mkwt.senla.training.carservice.logic.exceptions.IllegalIdException;
 import by.mkwt.senla.training.carservice.logic.exceptions.IllegalItemLineImplException;
 import by.mkwt.senla.training.carservice.logic.exceptions.ItemIsAlreadyExistException;
+import by.mkwt.senla.training.carservice.logic.exceptions.PermissionException;
 import by.mkwt.senla.training.carservice.view.Constants;
 import by.mkwt.senla.training.ui.api.Action;
 import by.mkwt.senla.training.ui.utils.ActionContentHolder;
